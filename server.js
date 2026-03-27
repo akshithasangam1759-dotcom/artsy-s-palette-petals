@@ -20,6 +20,7 @@ const db = mysql.createPool({
   user:     process.env.DB_USER     || 'root',
   password: process.env.DB_PASS     || '',
   database: process.env.DB_NAME     || 'artsy_petals',
+  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306,
   waitForConnections: true,
   connectionLimit: 10,
 });
@@ -244,14 +245,20 @@ app.post('/api/contact', async (req, res) => {
   
 });
 // -- ROOT
+const path = require('path');
+
+// Serve static files (app.jsx, etc.)
+app.use(express.static(path.join(__dirname)));
+
+// ROOT — serve the frontend
 app.get("/", (req, res) => {
-  res.json({ message: "Artsy Palette & Petals API running! 🌸" });
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // — HEALTH CHECK
 app.get('/api/health',(_, res) => res.json({ status: 'ok 🌸', time: new Date() }));
 
 // ── START ─────────────────────────────────────────────────────────────────────
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`🌸 Artsy server running on port ${PORT}`));
 
