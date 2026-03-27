@@ -1,6 +1,6 @@
-Artsy's Palette & Petals
+🌸 Artsy's Palette & Petals
 A beautiful flower shop web app built with React, Node.js, and MySQL — deployed on Railway.
-- Features
+✨ Features
 
 Browse & filter bouquet collection
 Custom bouquet builder
@@ -10,7 +10,7 @@ User login & dashboard
 Light/Dark mode
 Artsy chat widget
 
-- Tech Stack
+🛠️ Tech Stack
 
 Frontend: React (CDN), Babel, CSS Variables
 Backend: Node.js, Express.js
