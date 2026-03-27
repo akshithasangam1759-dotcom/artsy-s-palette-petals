@@ -1,5 +1,6 @@
 🌸 Artsy's Palette & Petals
 A beautiful flower shop web app built with React, Node.js, and MySQL — deployed on Railway.
+
 ✨ Features
 
 Browse & filter bouquet collection
