@@ -249,7 +249,7 @@ app.get("/", (req, res) => {
 });
 
 // — HEALTH CHECK
-app.get('/api/health', ...(_, res) => res.json({ status: 'ok 🌸', time: new Date() }));
+app.get('/api/health',(_, res) => res.json({ status: 'ok 🌸', time: new Date() }));
 
 // ── START ─────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
