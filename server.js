@@ -241,11 +241,17 @@ app.post('/api/contact', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+  
+});
+// -- ROOT
+app.get("/", (req, res) => {
+  res.json({ message: "Artsy Palette & Petals API running! 🌸" });
 });
 
-// ── HEALTH CHECK ──────────────────────────────────────────────────────────────
-app.get('/api/health', (_, res) => res.json({ status: 'ok 🌸', time: new Date() }));
+// — HEALTH CHECK
+app.get('/api/health', ...(_, res) => res.json({ status: 'ok 🌸', time: new Date() }));
 
 // ── START ─────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🌸 Artsy server running on port ${PORT}`));
+
