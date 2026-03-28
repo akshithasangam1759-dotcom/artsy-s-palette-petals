@@ -1066,10 +1066,13 @@ function ContactPage(){
                     padding:'12px 16px',color:'var(--tx)',fontSize:'14px',outline:'none',
                     resize:'vertical',fontFamily:'Lato,sans-serif'
                   }}/>
-                <button onClick={()=>setSent(true)} style={{
-                  background:'var(--bp)',border:'none',color:'#fff',
-                  padding:'13px',borderRadius:'12px',cursor:'pointer',fontSize:'14px',fontWeight:700
-                }}>Send Message 🌸</button>
+                <a href={`mailto:artsyspalette.petals@gmail.com?subject=Message from ${form.name}&body=${form.msg}%0A%0AFrom: ${form.name} (${form.email})`} 
+   target="_blank" rel="noreferrer" style={{display:'block'}}>
+  <button onClick={()=>setSent(true)} style={{
+    width:'100%',background:'var(--bp)',border:'none',color:'#fff',
+    padding:'13px',borderRadius:'12px',cursor:'pointer',fontSize:'14px',fontWeight:700,marginBottom:'12px'
+  }}>Send Message 🌸</button>
+</a>
                 <a href={`https://wa.me/919999999999?text=Hi Artsy! ${form.msg}`} target="_blank" rel="noreferrer">
                   <button style={{
                     width:'100%',background:'#25D366',border:'none',color:'#fff',
