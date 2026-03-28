@@ -4,12 +4,14 @@ const { useState, useEffect, useRef } = React;
 // ── THEME ──────────────────────────────────────────────────────────────────
 const themes = {
   day: {
-    bg: '#FDF6F0', bg2: '#FAF0F5', bg3: '#F5EAF7',
+    bg: 'linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1)', 
+    bg2: 'linear-gradient(135deg, #f8bbd0, #f48fb1, #fce4ec)', 
+    bg3: 'linear-gradient(135deg, #f48fb1, #fce4ec, #f8bbd0)',
     card: 'rgba(255,255,255,0.72)', cardBorder: 'rgba(220,180,210,0.35)',
     text: '#3D2B3D', text2: '#7A5C78', text3: '#B08AAA',
     accent: '#E8A0BF', accent2: '#C97BB2', accent3: '#A8D5B5',
     nav: 'rgba(255,248,252,0.88)', shadow: 'rgba(180,120,160,0.18)',
-    hero: 'linear-gradient(135deg,#FDF0F8 0%,#F5E6F7 40%,#EDF5F0 100%)',
+    hero: 'linear-gradient(135deg,#ffd6e7 0%,#ffb3c6 25%,#ff85a1 50%,#ffb3c6 75%,#ffd6e7 100%)',
     petal1:'#F4C2D2',petal2:'#D4B0D8',petal3:'#B8D8C8',petal4:'#F7D4A0',
     bubble:'rgba(255,255,255,0.9)',bubbleText:'#5A3A5A',
     inputBg:'rgba(255,255,255,0.8)',inputBorder:'#D4A8D0',
@@ -17,6 +19,7 @@ const themes = {
     btnSecondary:'rgba(232,160,191,0.15)',
     dashCard:'rgba(255,255,255,0.85)',
     overlay:'rgba(61,43,61,0.45)',
+    bg: '#ffd6e7',
   },
   night: {
     bg: '#1A0F1E', bg2: '#211628', bg3: '#180D20',
@@ -96,43 +99,16 @@ function PetalRain(){
 // ── ARTSY CHARACTER ────────────────────────────────────────────────────────
 function ArtsyCharacter({size=80,waving=false,talking=false}){
   return(
-    <svg width={size} height={size} viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-      {/* body */}
-      <ellipse cx="60" cy="90" rx="28" ry="22" fill="var(--p3)" opacity="0.8"/>
-      {/* dress details */}
-      <ellipse cx="60" cy="98" rx="24" ry="18" fill="var(--p1)" opacity="0.6"/>
-      {/* arms */}
-      <g style={waving?{animation:'wave 0.6s ease-in-out infinite',transformOrigin:'65px 75px'}:{}}>
-        <ellipse cx="82" cy="76" rx="8" ry="4" fill="#F5D5C0" transform="rotate(-30 82 76)"/>
-        <text x="90" y="70" fontSize="16">🌸</text>
-      </g>
-      <ellipse cx="38" cy="76" rx="8" ry="4" fill="#F5D5C0" transform="rotate(30 38 76)"/>
-      {/* neck */}
-      <rect x="55" y="60" width="10" height="14" fill="#F5D5C0" rx="5"/>
-      {/* head */}
-      <ellipse cx="60" cy="52" rx="22" ry="24" fill="#F5D5C0"/>
-      {/* hair */}
-      <ellipse cx="60" cy="36" rx="23" ry="16" fill="var(--p2)"/>
-      <ellipse cx="42" cy="52" rx="7" ry="18" fill="var(--p2)"/>
-      <ellipse cx="78" cy="52" rx="7" ry="18" fill="var(--p2)"/>
-      {/* hair flowers */}
-      <text x="26" y="46" fontSize="14">🌺</text>
-      <text x="76" y="34" fontSize="12">✿</text>
-      {/* eyes */}
-      <g style={{animation:'blink 4s ease-in-out infinite'}}>
-        <ellipse cx="52" cy="52" rx="4" ry="4.5" fill="#3D2B3D"/>
-        <ellipse cx="68" cy="52" rx="4" ry="4.5" fill="#3D2B3D"/>
-        <ellipse cx="53" cy="50" rx="1.5" ry="1.5" fill="white"/>
-        <ellipse cx="69" cy="50" rx="1.5" ry="1.5" fill="white"/>
-      </g>
-      {/* blush */}
-      <ellipse cx="46" cy="57" rx="5" ry="3" fill="var(--p1)" opacity="0.7"/>
-      <ellipse cx="74" cy="57" rx="5" ry="3" fill="var(--p1)" opacity="0.7"/>
-      {/* mouth */}
-      <path d={talking?"M 53 63 Q 60 70 67 63":"M 54 63 Q 60 68 66 63"} fill="none" stroke="var(--ac2)" strokeWidth="2" strokeLinecap="round"/>
-      {/* basket of flowers */}
-      <text x="35" y="108" fontSize="18">🧺</text>
-    </svg>
+    <img 
+      src="http://localhost:5000/artsy.gif"
+      alt="Artsy"
+      style={{
+        width:size*1.6,
+        height:size*1.6,
+        objectFit:'cover',
+        borderRadius:'50%'
+      }}
+    />
   );
 }
 
@@ -328,19 +304,34 @@ function ArtsynWidget(){
           </div>
         </div>
       )}
-      <button onClick={()=>setOpen(!open)} style={{
-        width:'64px',height:'64px',borderRadius:'50%',
-        background:'var(--bp)',border:'2px solid rgba(255,255,255,0.4)',
-        cursor:'pointer',boxShadow:`0 4px 20px var(--sh)`,
-        display:'flex',alignItems:'center',justifyContent:'center',
-        transition:'transform 0.3s',transform:open?'scale(0.9)':'scale(1)',
-        animation:'pulse 2.5s ease-in-out infinite'
+     <div onClick={()=>setOpen(!open)} style={{
+        display:'flex',flexDirection:'column',alignItems:'center',gap:'6px',
+        cursor:'pointer',
       }}>
-        <ArtsyCharacter size={52} waving={!open}/>
-      </button>
+        <div style={{
+          background:'var(--bp)',color:'#fff',
+          padding:'6px 12px',borderRadius:'20px',
+          fontSize:'11px',fontWeight:700,textAlign:'center',
+          boxShadow:`0 4px 16px var(--sh)`,
+          whiteSpace:'nowrap',
+          animation:'pulse 2.5s ease-in-out infinite'
+        }}>💬 Chat with Artsy<br/>the Florist!</div>
+        <div style={{
+          width:'80px',height:'80px',borderRadius:'50%',
+          border:'3px solid var(--ac)',
+          overflow:'hidden',
+          boxShadow:`0 4px 20px var(--sh)`,
+          transition:'transform 0.3s',
+          transform:open?'scale(0.9)':'scale(1)',
+        }}>
+          <img src="/artsy2.jpg" alt="Artsy" style={{
+            width:'100%',height:'100%',objectFit:'cover',
+            objectPosition:'top',display:'block'
+          }}/>
+        </div>
+      </div>
     </div>
-  );
-}
+  );}
 
 // ── HERO / HOME PAGE ───────────────────────────────────────────────────────
 function HomePage({setPage}){
@@ -380,16 +371,16 @@ function HomePage({setPage}){
         padding:'2rem',textAlign:'center',gap:'1.5rem',position:'relative',zIndex:1
       }}>
         <div className="fade-in" style={{animationDelay:'0.2s',opacity:0}}>
-          <div style={{fontSize:'13px',letterSpacing:'4px',color:'var(--ac2)',marginBottom:'8px',textTransform:'uppercase'}}>Welcome to</div>
-          <h1 className="playfair" style={{
-            fontSize:'clamp(2.5rem,7vw,5rem)',fontWeight:700,lineHeight:1.1,
-            background:'linear-gradient(135deg,var(--ac2),var(--p2),var(--ac3))',
-            WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'
-          }}>Artsy's Palette<br/><em>& Petals</em></h1>
-          <p className="cormorant" style={{fontSize:'clamp(1rem,2.5vw,1.4rem)',color:'var(--tx2)',marginTop:'12px',fontStyle:'italic'}}>
-            Where every bloom tells your story 🌺
-          </p>
-        </div>
+  <div style={{fontSize:'13px',letterSpacing:'4px',color:'var(--ac2)',marginBottom:'8px',textTransform:'uppercase'}}>Welcome to</div>
+  <h1 className="playfair" style={{
+    fontSize:'clamp(2.5rem,7vw,5rem)',fontWeight:700,lineHeight:1.1,
+    background:'linear-gradient(135deg,#C2185B,#8E24AA,#4A148C)',
+    WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'
+  }}>Artsy's Palette<br/><em>& Petals</em></h1>
+  <p className="cormorant" style={{fontSize:'clamp(1rem,2.5vw,1.4rem)',color:'var(--tx2)',marginTop:'12px',fontStyle:'italic'}}>
+    Where every bloom tells your story 🌺
+  </p>
+</div>
 
         {/* Artsy Intro */}
         <div style={{position:'relative',display:'flex',flexDirection:'column',alignItems:'center',gap:'12px'}}>
@@ -468,16 +459,38 @@ function HomePage({setPage}){
 
 // ── BOUQUET DATA ──────────────────────────────────────────────────────────
 const bouquets=[
-  {id:1,name:'Romantic Roses',emoji:'🌹',flowers:'Red Roses, Baby\'s Breath, Eucalyptus',price:1299,desc:'Classic romance in every petal',tag:'Bestseller'},
-  {id:2,name:'Lavender Dream',emoji:'💜',flowers:'Lavender, White Peonies, Lilac',price:1099,desc:'A dreamy blend of calm and beauty',tag:'Popular'},
-  {id:3,name:'Spring Garden Mix',emoji:'🌷',flowers:'Tulips, Daisies, Iris, Greenery',price:999,desc:'A burst of spring freshness',tag:'Seasonal'},
-  {id:4,name:'Sunflower Joy',emoji:'🌻',flowers:'Sunflowers, Orange Roses, Marigold',price:899,desc:'Bright and cheerful arrangement',tag:'Happy Pick'},
-  {id:5,name:'Peony Paradise',emoji:'🌸',flowers:'Pink Peonies, Blush Roses, Ranunculus',price:1499,desc:'Luxuriously soft and romantic',tag:'Premium'},
-  {id:6,name:'Orchid Elegance',emoji:'🪷',flowers:'Purple Orchids, Anthuriums, Palms',price:1799,desc:'Exotic sophistication in a vase',tag:'Luxury'},
-  {id:7,name:'Wildflower Whisper',emoji:'🌼',flowers:'Daisies, Cosmos, Cornflowers, Herbs',price:799,desc:'Free-spirited meadow charm',tag:'Whimsical'},
-  {id:8,name:'Blush & Bloom',emoji:'🌺',flowers:'Blush Roses, Peonies, Sweet Peas',price:1199,desc:'The perfect soft romantic gift',tag:'Gift Pick'},
-];
+  {id:1,name:'Romantic Roses',
+   image:'https://noongifts.com/cdn/shop/products/a-dozen-red-roses-with-eucalyptus-leaves-bouquet.jpg?v=1680114335',
+   flowers:'Red Roses,Eucalyptus',price:699,desc:'Classic romance in every petal',tag:'Bestseller'},
 
+  {id:2,name:'Lavender Dream',
+   image:'https://i.etsystatic.com/6821569/r/il/bc4422/4618144250/il_570xN.4618144250_8k3w.jpg',
+   flowers:'Lavender, White Peonies, Lilac',price:899,desc:'A dreamy blend of calm and beauty',tag:'Popular'},
+
+  {id:3,name:'Spring Garden Mix',
+   image:'https://media.karousell.com/media/photos/products/2020/10/24/tulips__daisies_bouquet_1603560766_ad4a9809.jpg',
+   flowers:'Tulips, Daisies, Iris, Greenery',price:599,desc:'A burst of spring freshness',tag:'Seasonal'},
+
+  {id:4,name:'Sunflower Joy',
+   image:'https://png.pngtree.com/thumb_back/fw800/background/20240513/pngtree-a-sunset-bouquet-with-marigolds-sunflowers-and-roses-image_15766322.jpg',
+   flowers:'Sunflowers, Orange Roses, Marigold',price:799,desc:'Bright and cheerful arrangement',tag:'Happy Pick'},
+
+  {id:5,name:'Peony Paradise',
+   image:'https://i.pinimg.com/736x/79/27/72/7927724910de30059642728b3cfb2506.jpg',
+   flowers:'Pink Peonies, Blush Roses, Ranunculus',price:1499,desc:'Luxuriously soft and romantic',tag:'Premium'},
+
+  {id:6,name:'Orchid Elegance',
+   image:'https://cdn.bloomsflora.com/uploads/product/bloomsflora/1403_98_15655.webp',
+   flowers:'Purple Orchids, Anthuriums, Palms',price:1799,desc:'Exotic sophistication in a vase',tag:'Luxury'},
+
+  {id:7,name:'Wildflower Whisper',
+   image:'https://luxelocksstudio.com/wp-content/uploads/2025/11/wildflower-wedding-11-683x1024.jpg',
+   flowers:'Daisies, Cosmos, Cornflowers, Herbs',price:499,desc:'Free-spirited meadow charm',tag:'Whimsical'},
+
+  {id:8,name:'Blush & Bloom',
+   image:'https://floramoments.sg/cdn/shop/articles/Peonies_Singapore_c80e2c59-4151-478d-be8a-1933f69f619c.jpg?v=1772857681',
+   flowers:'Blush Roses, Peonies, Sweet Peas',price:1099,desc:'The perfect soft romantic gift',tag:'Gift Pick'},
+];
 function BouquetCard({bouquet,delay=0,onAdd}){
   const [added,setAdded]=useState(false);
   const [hovered,setHovered]=useState(false);
@@ -497,21 +510,27 @@ function BouquetCard({bouquet,delay=0,onAdd}){
         overflow:'hidden',boxShadow:hovered?`0 12px 40px var(--sh)`:`0 4px 16px var(--sh)`,
         transition:'transform 0.3s,box-shadow 0.3s',
         transform:hovered?'translateY(-6px)':'none'
-      }}>
-      <div style={{
-        height:'140px',background:`linear-gradient(135deg,var(--p1)40%,var(--p2))`,
-        display:'flex',alignItems:'center',justifyContent:'center',
-        fontSize:'64px',position:'relative'
-      }}>
-        {bouquet.emoji}
-        {bouquet.tag&&(
-          <div style={{
-            position:'absolute',top:'10px',right:'10px',
-            background:'var(--bp)',color:'#fff',
-            padding:'3px 10px',borderRadius:'12px',fontSize:'10px',fontWeight:700
-          }}>{bouquet.tag}</div>
-        )}
-      </div>
+}}>
+<div style={{
+  height:'150px',position:'relative',overflow:'hidden',
+  background:`linear-gradient(135deg,var(--p1) 40%,var(--p2))`
+}}>
+  {bouquet.image
+    ? <img src={bouquet.image} alt={bouquet.name}
+        style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+    : <div style={{
+        height:'140px',display:'flex',alignItems:'center',
+        justifyContent:'center',fontSize:'64px'
+      }}>{bouquet.emoji}</div>
+  }
+  {bouquet.tag&&(
+    <div style={{
+      position:'absolute',top:'10px',right:'10px',
+      background:'var(--bp)',color:'#fff',
+      padding:'3px 10px',borderRadius:'12px',fontSize:'10px',fontWeight:700
+    }}>{bouquet.tag}</div>
+  )}
+</div>
       <div style={{padding:'14px'}}>
         <h3 className="playfair" style={{fontSize:'16px',marginBottom:'4px',color:'var(--tx)'}}>{bouquet.name}</h3>
         <p style={{fontSize:'12px',color:'var(--tx3)',marginBottom:'4px'}}>{bouquet.flowers}</p>
@@ -584,18 +603,49 @@ function ShopPage(){
 
 // ── CUSTOMIZE PAGE ────────────────────────────────────────────────────────
 function CustomizePage(){
-  const [form,setForm]=useState({flower:'Roses',color:'Pink',wrap:'Kraft Paper',size:'Medium',ribbon:false,card:false,msg:''});
+  const [form,setForm]=useState({flowers:[],color:'Pink',wrap:'Kraft Paper',size:'Medium',ribbon:false,card:false,msg:''});
   const [preview,setPreview]=useState(false);
 
-  const flowers=['Roses 🌹','Tulips 🌷','Lilies 🪷','Sunflowers 🌻','Orchids 💜','Peonies 🌸'];
+  const flowers=[
+    {name:'Roses 🌹',    price:299},
+    {name:'Tulips 🌷',   price:149},
+    {name:'Lilies 🪷',   price:250},
+    {name:'Sunflowers 🌻',price:179},
+    {name:'Orchids 💜',  price:399},
+    {name:'Peonies 🌸',  price:349},
+  ];
   const colors=['Pink','Red','White','Yellow','Purple','Peach','Mixed'];
   const wraps=['Kraft Paper','White Tissue','Pastel Blue','Blush Pink','Sage Green','Velvet Burgundy'];
   const sizes=['Small — ₹599','Medium — ₹999','Large — ₹1499','Jumbo — ₹1999'];
 
   const upd=(k,v)=>setForm(f=>({...f,[k]:v}));
-  const price=sizes.findIndex(s=>s.startsWith(form.size))*400+599;
+  const toggleFlower=(fname)=>setForm(f=>({
+    ...f,
+    flowers:f.flowers.includes(fname)
+      ?f.flowers.filter(x=>x!==fname)
+      :[...f.flowers,fname]
+  }));
 
-  const emojiMap={'Roses 🌹':'🌹','Tulips 🌷':'🌷','Lilies 🪷':'🪷','Sunflowers 🌻':'🌻','Orchids 💜':'💜','Peonies 🌸':'🌸'};
+  const sizePrice=sizes.findIndex(s=>s.startsWith(form.size))*400+599;
+  const flowerPrice=form.flowers.reduce((sum,fname)=>{
+    const f=flowers.find(fl=>fl.name.startsWith(fname));
+    return sum+(f?f.price:0);
+  },0);
+  const price=sizePrice+flowerPrice;
+
+  const imageMap={
+    'Roses 🌹':'https://img.freepik.com/free-photo/close-up-blooming-flower_23-2152023680.jpg?w=400',
+    'Tulips 🌷':'https://i.pinimg.com/474x/60/6d/21/606d21db417960fd77d6e35682131a22.jpg',
+    'Lilies 🪷':'https://i.pinimg.com/474x/a5/6f/1d/a56f1d52f4a5783b234deaffb480985a.jpg',
+    'Sunflowers 🌻':'https://wallpapersok.com/images/hd/enjoy-the-beauty-of-a-sunflower-with-this-sunflower-aesthetic-iphone-wallpaper-q24bhvdl6uuvakcx.jpg',
+    'Orchids 💜':'https://market99.com/cdn/shop/files/WW10006632-4_2048x.jpg?v=1737487688',
+    'Peonies 🌸':'https://s.widget-club.com/images/YyiR86zpwIMIfrCZoSs4ulVD9RF3/cb94b85535b2dec11a9173b8f79728d1/v31Ai62F5rXwCpbePEyI.jpg?q=70&w=500',
+  };
+
+  const getImage=(fname)=>{
+    const match=flowers.find(f=>f.name.startsWith(fname));
+    return match?imageMap[match.name]:'';
+  };
 
   return(
     <div style={{minHeight:'100vh',paddingTop:'80px',padding:'80px 2rem 3rem',background:'var(--bg2)'}}>
@@ -612,13 +662,28 @@ function CustomizePage(){
             <div style={{background:'var(--card)',backdropFilter:'blur(12px)',border:'1px solid var(--cb)',borderRadius:'16px',padding:'1.25rem'}}>
               <label style={{fontWeight:700,color:'var(--tx)',marginBottom:'10px',display:'block'}}>🌸 Choose Your Flower</label>
               <div style={{display:'flex',flexWrap:'wrap',gap:'8px'}}>
-                {flowers.map(f=>(
-                  <button key={f} onClick={()=>upd('flower',f.split(' ')[0])} style={{
-                    background:form.flower===f.split(' ')[0]?'var(--bp)':'var(--bs)',
-                    border:`1px solid var(--cb)`,color:form.flower===f.split(' ')[0]?'#fff':'var(--tx2)',
-                    padding:'7px 14px',borderRadius:'20px',cursor:'pointer',fontSize:'13px',transition:'all 0.2s'
-                  }}>{f}</button>
-                ))}
+                {flowers.map(f=>{
+                  const fname=f.name.split(' ')[0];
+                  const selected=form.flowers.includes(fname);
+                  return(
+                    <button key={f.name} onClick={()=>toggleFlower(fname)} style={{
+                      background:selected?'var(--bp)':'var(--bs)',
+                      border:`1px solid var(--cb)`,
+                      color:selected?'#fff':'var(--tx2)',
+                      padding:'7px 14px',borderRadius:'20px',cursor:'pointer',
+                      fontSize:'13px',transition:'all 0.2s',
+                      display:'flex',flexDirection:'column',alignItems:'center',gap:'2px'
+                    }}>
+                      <span>{selected&&'✓ '}{f.name}</span>
+                      <span style={{fontSize:'11px',opacity:0.85}}>+₹{f.price}</span>
+                    </button>
+                  );
+                })}
+                {form.flowers.length>0&&(
+                  <div style={{width:'100%',marginTop:'8px',fontSize:'12px',color:'var(--ac2)',fontWeight:600}}>
+                    ✨ Selected: {form.flowers.join(' + ')}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -690,11 +755,25 @@ function CustomizePage(){
           {/* Preview */}
           <div style={{position:'sticky',top:'80px',alignSelf:'start'}}>
             <div style={{background:'var(--card)',backdropFilter:'blur(12px)',border:'1px solid var(--cb)',borderRadius:'20px',padding:'2rem',textAlign:'center'}}>
-              <div style={{fontSize:'80px',marginBottom:'16px'}}>{emojiMap[flowers.find(f=>f.startsWith(form.flower))||flowers[0]]||'🌸'}</div>
+
+              {/* Flower images */}
+              <div style={{display:'flex',flexDirection:'column',gap:'12px',alignItems:'center',marginBottom:'16px'}}>
+                {form.flowers.length===0?(
+                  <div style={{width:'160px',height:'160px',borderRadius:'16px',border:'2px solid var(--cb)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'48px',background:'var(--bs)'}}>🌸</div>
+                ):(
+                  form.flowers.map(fname=>(
+                    <div key={fname} style={{width:'160px',height:'160px',borderRadius:'16px',overflow:'hidden',border:'2px solid var(--cb)',flexShrink:0}}>
+                      <img src={getImage(fname)} alt={fname} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+                    </div>
+                  ))
+                )}
+              </div>
+
               <h2 className="playfair" style={{fontSize:'1.4rem',marginBottom:'8px',color:'var(--tx)'}}>Your Custom Bouquet</h2>
               <div style={{display:'flex',flexDirection:'column',gap:'6px',marginBottom:'1.5rem'}}>
                 {[
-                  ['Flower',form.flower],['Color',form.color],['Wrap',form.wrap],['Size',form.size],
+                  ['Flowers',form.flowers.length>0?form.flowers.join(' + '):'None selected'],
+                  ['Color',form.color],['Wrap',form.wrap],['Size',form.size],
                   ['Ribbon',form.ribbon?'Yes ✓':'No'],['Card',form.card?'Yes ✓':'No']
                 ].map(([k,v])=>(
                   <div key={k} style={{display:'flex',justifyContent:'space-between',fontSize:'13px'}}>
@@ -736,9 +815,9 @@ function CustomizePage(){
               <div style={{fontSize:'72px',marginBottom:'16px'}}>🎉</div>
               <h2 className="playfair" style={{fontSize:'1.8rem',marginBottom:'8px'}}>Order via WhatsApp!</h2>
               <p style={{color:'var(--tx2)',fontSize:'14px',marginBottom:'1.5rem'}}>
-                Your custom {form.color} {form.flower} bouquet is ready to order!
+                Your custom {form.color} bouquet with {form.flowers.join(' + ')||'flowers'} is ready to order!
               </p>
-              <a href={`https://wa.me/919999999999?text=Hi Artsy! I'd like to order a custom bouquet:%0AFlower: ${form.flower}%0AColor: ${form.color}%0AWrap: ${form.wrap}%0ASize: ${form.size}%0ARibbon: ${form.ribbon?'Yes':'No'}%0ACard: ${form.card?`Yes - "${form.msg}"`:'No'}%0APrice: ₹${price+(form.ribbon?100:0)+(form.card?50:0)}`}
+              <a href={`https://wa.me/919999999999?text=Hi Artsy! I'd like to order a custom bouquet:%0AFlowers: ${form.flowers.join(' + ')}%0AColor: ${form.color}%0AWrap: ${form.wrap}%0ASize: ${form.size}%0ARibbon: ${form.ribbon?'Yes':'No'}%0ACard: ${form.card?`Yes - "${form.msg}"`:'No'}%0APrice: ₹${price+(form.ribbon?100:0)+(form.card?50:0)}`}
                 target="_blank" rel="noreferrer">
                 <button style={{
                   width:'100%',background:'#25D366',border:'none',color:'#fff',
@@ -926,7 +1005,7 @@ function ContactPage(){
             {[
               {icon:'📱',label:'WhatsApp',val:'+919999999999',href:'https://wa.me/919999999999',color:'#25D366'},
               {icon:'📞',label:'Call Us',val:'+919999999999',href:'tel:+919999999999',color:'var(--ac2)'},
-              {icon:'✉️',label:'Email',val:'artsy@petals.in',href:'mailto:artsy@petals.in',color:'var(--ac)'},
+              {icon:'✉️',label:'Email',val:'artsyspalette.petals@gmail.com',href:'mailto:artsyspalette.petals@gmail.com',color:'var(--ac)'},
               {icon:'📍',label:'Address',val:'Suryanagar, Mancherial\nTelangana, India',href:'#',color:'var(--ac3)'},
             ].map(c=>(
               <a key={c.label} href={c.href} target="_blank" rel="noreferrer" style={{
