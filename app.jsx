@@ -100,7 +100,7 @@ function PetalRain(){
 function ArtsyCharacter({size=80,waving=false,talking=false}){
   return(
     <img 
-      src="http://localhost:5000/artsy.gif"
+      src="https://i.postimg.cc/Jng2jHHk/artsy-gif-ezgif-com-optimize.gif"
       alt="Artsy"
       style={{
         width:size*1.6,
