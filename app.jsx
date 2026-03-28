@@ -494,6 +494,8 @@ const bouquets=[
 function BouquetCard({bouquet,delay=0,onAdd}){
   const [added,setAdded]=useState(false);
   const [hovered,setHovered]=useState(false);
+  const [showOrder,setShowOrder]=useState(false);
+  const [showContact,setShowContact]=useState(false);
 
   const handleAdd=()=>{
     setAdded(true);
@@ -502,6 +504,7 @@ function BouquetCard({bouquet,delay=0,onAdd}){
   };
 
   return(
+    <>
     <div onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}
       className="fade-in" style={{
         animationDelay:`${delay}s`,opacity:0,
@@ -510,27 +513,16 @@ function BouquetCard({bouquet,delay=0,onAdd}){
         overflow:'hidden',boxShadow:hovered?`0 12px 40px var(--sh)`:`0 4px 16px var(--sh)`,
         transition:'transform 0.3s,box-shadow 0.3s',
         transform:hovered?'translateY(-6px)':'none'
-}}>
-<div style={{
-  height:'150px',position:'relative',overflow:'hidden',
-  background:`linear-gradient(135deg,var(--p1) 40%,var(--p2))`
-}}>
-  {bouquet.image
-    ? <img src={bouquet.image} alt={bouquet.name}
-        style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
-    : <div style={{
-        height:'140px',display:'flex',alignItems:'center',
-        justifyContent:'center',fontSize:'64px'
-      }}>{bouquet.emoji}</div>
-  }
-  {bouquet.tag&&(
-    <div style={{
-      position:'absolute',top:'10px',right:'10px',
-      background:'var(--bp)',color:'#fff',
-      padding:'3px 10px',borderRadius:'12px',fontSize:'10px',fontWeight:700
-    }}>{bouquet.tag}</div>
-  )}
-</div>
+      }}>
+      <div style={{height:'150px',position:'relative',overflow:'hidden',background:`linear-gradient(135deg,var(--p1) 40%,var(--p2))`}}>
+        {bouquet.image
+          ?<img src={bouquet.image} alt={bouquet.name} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}/>
+          :<div style={{height:'140px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'64px'}}>{bouquet.emoji}</div>
+        }
+        {bouquet.tag&&(
+          <div style={{position:'absolute',top:'10px',right:'10px',background:'var(--bp)',color:'#fff',padding:'3px 10px',borderRadius:'12px',fontSize:'10px',fontWeight:700}}>{bouquet.tag}</div>
+        )}
+      </div>
       <div style={{padding:'14px'}}>
         <h3 className="playfair" style={{fontSize:'16px',marginBottom:'4px',color:'var(--tx)'}}>{bouquet.name}</h3>
         <p style={{fontSize:'12px',color:'var(--tx3)',marginBottom:'4px'}}>{bouquet.flowers}</p>
@@ -544,7 +536,7 @@ function BouquetCard({bouquet,delay=0,onAdd}){
               padding:'6px 12px',borderRadius:'12px',cursor:'pointer',fontSize:'12px',fontWeight:700,
               transition:'all 0.3s'
             }}>{added?'Added ✓':'+ Cart'}</button>
-            <button style={{
+            <button onClick={()=>setShowOrder(true)} style={{
               background:'var(--bp)',border:'none',color:'#fff',
               padding:'6px 14px',borderRadius:'12px',cursor:'pointer',fontSize:'12px',fontWeight:700
             }}>Buy Now</button>
@@ -552,8 +544,50 @@ function BouquetCard({bouquet,delay=0,onAdd}){
         </div>
       </div>
     </div>
+
+    {showOrder&&(
+      <div style={{position:'fixed',inset:0,background:'var(--ov)',backdropFilter:'blur(8px)',zIndex:300,display:'flex',alignItems:'center',justifyContent:'center',padding:'1rem'}} onClick={()=>setShowOrder(false)}>
+        <div className="pop-in" onClick={e=>e.stopPropagation()} style={{background:'var(--card)',backdropFilter:'blur(20px)',border:'1px solid var(--cb)',borderRadius:'24px',padding:'2.5rem',maxWidth:'420px',width:'100%',boxShadow:`0 20px 60px var(--sh)`}}>
+          <h2 className="playfair" style={{fontSize:'1.8rem',marginBottom:'1.5rem',textAlign:'center'}}>Your Order 🛒</h2>
+          <div style={{background:'var(--bs)',borderRadius:'16px',padding:'1.25rem',marginBottom:'1.5rem'}}>
+            <img src={bouquet.image} alt={bouquet.name} style={{width:'100%',height:'160px',objectFit:'cover',borderRadius:'12px',marginBottom:'12px'}}/>
+            <div style={{display:'flex',justifyContent:'space-between',marginBottom:'8px'}}>
+              <span style={{fontWeight:700,fontSize:'16px',color:'var(--tx)'}}>{bouquet.name}</span>
+              <span style={{fontWeight:700,fontSize:'18px',color:'var(--ac2)'}}>₹{bouquet.price}</span>
+            </div>
+            <p style={{fontSize:'13px',color:'var(--tx2)',marginBottom:'4px'}}>🌸 {bouquet.flowers}</p>
+            <p style={{fontSize:'12px',color:'var(--tx3)',fontStyle:'italic'}}>{bouquet.desc}</p>
+          </div>
+          <div style={{display:'flex',justifyContent:'space-between',padding:'12px 0',borderTop:'1px solid var(--cb)',borderBottom:'1px solid var(--cb)',marginBottom:'1.5rem'}}>
+            <span style={{color:'var(--tx2)'}}>Total</span>
+            <span style={{fontWeight:700,fontSize:'20px',color:'var(--ac2)'}}>₹{bouquet.price}</span>
+          </div>
+          <button onClick={()=>{setShowOrder(false);setShowContact(true);}} style={{width:'100%',background:'var(--bp)',border:'none',color:'#fff',padding:'14px',borderRadius:'14px',cursor:'pointer',fontSize:'15px',fontWeight:700,marginBottom:'10px'}}>Place Order 🌸</button>
+          <button onClick={()=>setShowOrder(false)} style={{width:'100%',background:'transparent',border:'1px solid var(--cb)',color:'var(--tx2)',padding:'10px',borderRadius:'14px',cursor:'pointer',fontSize:'13px'}}>Continue Shopping</button>
+        </div>
+      </div>
+    )}
+
+    {showContact&&(
+      <div style={{position:'fixed',inset:0,background:'var(--ov)',backdropFilter:'blur(8px)',zIndex:300,display:'flex',alignItems:'center',justifyContent:'center',padding:'1rem'}} onClick={()=>setShowContact(false)}>
+        <div className="pop-in" onClick={e=>e.stopPropagation()} style={{background:'var(--card)',backdropFilter:'blur(20px)',border:'1px solid var(--cb)',borderRadius:'24px',padding:'2.5rem',maxWidth:'380px',width:'100%',textAlign:'center',boxShadow:`0 20px 60px var(--sh)`}}>
+          <div style={{fontSize:'48px',marginBottom:'12px'}}>🌸</div>
+          <h2 className="playfair" style={{fontSize:'1.6rem',marginBottom:'8px'}}>How would you like to order?</h2>
+          <p style={{color:'var(--tx2)',fontSize:'13px',marginBottom:'2rem'}}>Choose your preferred way to place your order for <strong>{bouquet.name}</strong> 💕</p>
+          <a href={`https://wa.me/919999999999?text=Hi Artsy! I'd like to order:%0A%0A🌸 ${bouquet.name}%0A💐 ${bouquet.flowers}%0A💰 ₹${bouquet.price}%0A%0APlease confirm my order!`} target="_blank" rel="noreferrer" style={{display:'block',marginBottom:'12px'}}>
+            <button style={{width:'100%',background:'#25D366',border:'none',color:'#fff',padding:'14px',borderRadius:'14px',cursor:'pointer',fontSize:'15px',fontWeight:700}}>📱 Order via WhatsApp</button>
+          </a>
+          <a href={`mailto:artsyspalette.petals@gmail.com?subject=Order: ${bouquet.name}&body=Hi Artsy!%0A%0AI'd like to order:%0A%0A🌸 Bouquet: ${bouquet.name}%0A💐 Flowers: ${bouquet.flowers}%0A💰 Price: ₹${bouquet.price}%0A%0APlease confirm my order!`} target="_blank" rel="noreferrer" style={{display:'block',marginBottom:'12px'}}>
+            <button style={{width:'100%',background:'var(--bp)',border:'none',color:'#fff',padding:'14px',borderRadius:'14px',cursor:'pointer',fontSize:'15px',fontWeight:700}}>✉️ Order via Email</button>
+          </a>
+          <button onClick={()=>setShowContact(false)} style={{background:'transparent',border:'none',color:'var(--tx3)',cursor:'pointer',fontSize:'13px'}}>Cancel</button>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
+
 
 // ── SHOP PAGE ──────────────────────────────────────────────────────────────
 function ShopPage(){
