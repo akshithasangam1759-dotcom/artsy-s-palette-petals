@@ -636,9 +636,10 @@ function ShopPage(){
 }
 
 // ── CUSTOMIZE PAGE ────────────────────────────────────────────────────────
-function CustomizePage(){
+function CustomizePage({user,setPage,wishlist,setWishlist}){
   const [form,setForm]=useState({flowers:[],color:'Pink',wrap:'Kraft Paper',size:'Medium',ribbon:false,card:false,msg:''});
   const [preview,setPreview]=useState(false);
+const [wishlisted,setWishlisted]=useState(false);
 
   const flowers=[
     {name:'Roses 🌹',    price:299},
@@ -827,10 +828,28 @@ function CustomizePage(){
                 padding:'14px',borderRadius:'14px',cursor:'pointer',
                 fontSize:'15px',fontWeight:700,marginBottom:'10px'
               }}>Create My Bouquet 🌸</button>
-              <button style={{
-                width:'100%',background:'transparent',border:`1px solid var(--cb)`,color:'var(--tx2)',
-                padding:'10px',borderRadius:'14px',cursor:'pointer',fontSize:'13px'
-              }}>Save to Wishlist 💝</button>
+              <button onClick={()=>{
+  if(!user){setPage('login');return;}
+  const item={
+    name:'Custom Bouquet',
+    flowers:form.flowers.join(' + '),
+    color:form.color,
+    wrap:form.wrap,
+    size:form.size,
+    price:price+(form.ribbon?100:0)+(form.card?50:0),
+    emoji:'🌸'
+  };
+  setWishlist(w=>[...w,item]);
+  setWishlisted(true);
+  setTimeout(()=>setWishlisted(false),2000);
+}} style={{
+  width:'100%',
+  background:wishlisted?'var(--ac3)':'transparent',
+  border:`1px solid var(--cb)`,
+  color:wishlisted?'#fff':'var(--tx2)',
+  padding:'10px',borderRadius:'14px',cursor:'pointer',fontSize:'13px',
+  transition:'all 0.3s'
+}}>{wishlisted?'Saved to Wishlist ✓ 💝':'Save to Wishlist 💝'}</button>
             </div>
           </div>
         </div>
@@ -1212,12 +1231,11 @@ function LoginPage({setUser,setPage}){
 }
 
 // ── DASHBOARD PAGE ────────────────────────────────────────────────────────
-function DashboardPage({user,setPage}){
+function DashboardPage({user,setPage,wishlist=[]}){
   const orders=[
     {id:'#ORD001',item:'Romantic Roses',status:'Delivered',date:'Mar 15',price:1299},
     {id:'#ORD002',item:'Lavender Dream',status:'Processing',date:'Mar 17',price:1099},
   ];
-  const wishlist=[bouquets[4],bouquets[5]];
 
   return(
     <div style={{minHeight:'100vh',paddingTop:'80px',padding:'80px 2rem 3rem',background:'var(--bg)'}}>
@@ -1246,7 +1264,7 @@ function DashboardPage({user,setPage}){
         </div>
 
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1rem',marginBottom:'2rem'}}>
-          {[['🛒','Orders','2'],['💝','Wishlist','2'],['🌸','Saved','1']].map(([ic,l,v])=>(
+          {[['🛒','Orders','2'],['💝','Wishlist',wishlist.length],['🌸','Saved','1']].map(([ic,l,v])=>(
             <div key={l} style={{
               background:'var(--dc)',backdropFilter:'blur(12px)',border:'1px solid var(--cb)',
               borderRadius:'16px',padding:'1.25rem',textAlign:'center'
@@ -1292,20 +1310,27 @@ function DashboardPage({user,setPage}){
         }}>
           <h3 className="playfair" style={{fontSize:'1.3rem',marginBottom:'1rem'}}>Wishlist 💝</h3>
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))',gap:'1rem'}}>
-            {wishlist.map(b=>(
-              <div key={b.id} style={{
-                background:'var(--bs)',border:`1px solid var(--cb)`,borderRadius:'16px',
-                padding:'1rem',textAlign:'center'
-              }}>
-                <div style={{fontSize:'40px',marginBottom:'8px'}}>{b.emoji}</div>
-                <div style={{fontWeight:700,fontSize:'14px',marginBottom:'4px'}}>{b.name}</div>
-                <div style={{color:'var(--ac2)',fontWeight:700,fontSize:'16px',marginBottom:'10px'}}>₹{b.price}</div>
-                <button style={{
-                  background:'var(--bp)',border:'none',color:'#fff',
-                  padding:'7px 16px',borderRadius:'10px',cursor:'pointer',fontSize:'12px',fontWeight:700
-                }}>Add to Cart</button>
-              </div>
-            ))}
+            {wishlist.length===0?(
+  <div style={{textAlign:'center',padding:'2rem',color:'var(--tx3)'}}>
+    No items in wishlist yet 💕
+  </div>
+):(
+  wishlist.map((b,i)=>(
+    <div key={i} style={{
+      background:'var(--bs)',border:`1px solid var(--cb)`,borderRadius:'16px',
+      padding:'1rem',textAlign:'center'
+    }}>
+      <div style={{fontSize:'40px',marginBottom:'8px'}}>{b.emoji||'🌸'}</div>
+      <div style={{fontWeight:700,fontSize:'14px',marginBottom:'4px'}}>{b.name}</div>
+      <div style={{fontSize:'12px',color:'var(--tx3)',marginBottom:'4px'}}>{b.flowers}</div>
+      <div style={{color:'var(--ac2)',fontWeight:700,fontSize:'16px',marginBottom:'10px'}}>₹{b.price}</div>
+      <button style={{
+        background:'var(--bp)',border:'none',color:'#fff',
+        padding:'7px 16px',borderRadius:'10px',cursor:'pointer',fontSize:'12px',fontWeight:700
+      }}>Add to Cart</button>
+    </div>
+  ))
+)}
           </div>
         </div>
       </div>
@@ -1319,6 +1344,7 @@ function App(){
   const [dark,setDark]=useState(false);
   const [page,setPage]=useState('home');
   const [user,setUser]=useState(null);
+const [wishlist,setWishlist]=useState([]);
 
   useEffect(()=>{
     injectStyles(dark?themes.night:themes.day);
@@ -1329,12 +1355,12 @@ function App(){
   const pages={
     home:<HomePage setPage={setPage}/>,
     shop:<ShopPage/>,
-    customize:<CustomizePage/>,
+    customize:<CustomizePage user={user} setPage={setPage} wishlist={wishlist} setWishlist={setWishlist}/>,
     recommendations:<RecommendationsPage/>,
     about:<AboutPage/>,
     contact:<ContactPage/>,
     login:<LoginPage setUser={setUser} setPage={setPage}/>,
-    dashboard:user?<DashboardPage user={user} setPage={setPage}/>:<LoginPage setUser={setUser} setPage={setPage}/>,
+    dashboard:user?<DashboardPage user={user} setPage={setPage} wishlist={wishlist}/>:<LoginPage setUser={setUser} setPage={setPage}/>,
   };
 
   return(
