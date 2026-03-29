@@ -723,7 +723,7 @@ function CustomizePage(){
 
             {/* Color */}
             <div style={{background:'var(--card)',backdropFilter:'blur(12px)',border:'1px solid var(--cb)',borderRadius:'16px',padding:'1.25rem'}}>
-              <label style={{fontWeight:700,color:'var(--tx)',marginBottom:'10px',display:'block'}}>🎨 Choose Color</label>
+              <label style={{fontWeight:700,color:'var(--tx)',marginBottom:'10px',display:'block'}}>🎨 Choose Color for Wrapping Paper</label>
               <div style={{display:'flex',flexWrap:'wrap',gap:'8px'}}>
                 {colors.map(c=>(
                   <button key={c} onClick={()=>upd('color',c)} style={{
