@@ -1212,13 +1212,6 @@ function LoginPage({setUser,setPage}){
           padding:'13px',borderRadius:'14px',cursor:'pointer',fontSize:'15px',fontWeight:700,marginBottom:'12px'
         }}>{mode==='login'?'Sign In 🌸':'Create Account 🌺'}</button>
 
-        <div style={{color:'var(--tx3)',fontSize:'12px',marginBottom:'12px'}}>— or continue with —</div>
-
-        <button style={{
-          width:'100%',background:'var(--bs)',border:`1px solid var(--cb)`,color:'var(--tx)',
-          padding:'11px',borderRadius:'14px',cursor:'pointer',fontSize:'13px',fontWeight:600
-        }}>🔵 Continue with Google</button>
-
         <p style={{color:'var(--tx3)',fontSize:'12px',marginTop:'1rem'}}>
           {mode==='login'?'No account? ':'Have an account? '}
           <span onClick={()=>setMode(mode==='login'?'signup':'login')} style={{color:'var(--ac2)',cursor:'pointer',fontWeight:700}}>
@@ -1264,7 +1257,7 @@ function DashboardPage({user,setPage,wishlist=[]}){
         </div>
 
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1rem',marginBottom:'2rem'}}>
-          {[['🛒','Orders','2'],['💝','Wishlist',wishlist.length],['🌸','Saved','1']].map(([ic,l,v])=>(
+          {[['🛒','Orders','2'],['💝','Wishlist',wishlist.length],['🛍️','Cart','0']].map(([ic,l,v])=>(
             <div key={l} style={{
               background:'var(--dc)',backdropFilter:'blur(12px)',border:'1px solid var(--cb)',
               borderRadius:'16px',padding:'1.25rem',textAlign:'center'
