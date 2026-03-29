@@ -648,8 +648,8 @@ function CustomizePage(){
     {name:'Orchids 💜',  price:399},
     {name:'Peonies 🌸',  price:349},
   ];
-  const colors=['Pink','Red','White','Yellow','Purple','Peach','Mixed'];
-  const wraps=['Kraft Paper','White Tissue','Pastel Blue','Blush Pink','Sage Green','Velvet Burgundy'];
+  const colors=['Pink','Red','White','Yellow','Purple','Peach','Mixed','Pastel Blue','Blush Pink','Sage Green','Velvet Burgundy'];
+  const wraps=['Kraft Paper','White Tissue','Jute/Burlap','Glossy Cellophane','Matte Film','Newspaper Style'];
   const sizes=['Small — ₹599','Medium — ₹999','Large — ₹1499','Jumbo — ₹1999'];
 
   const upd=(k,v)=>setForm(f=>({...f,[k]:v}));
@@ -852,12 +852,22 @@ function CustomizePage(){
                 Your custom {form.color} bouquet with {form.flowers.join(' + ')||'flowers'} is ready to order!
               </p>
               <a href={`https://wa.me/919999999999?text=Hi Artsy! I'd like to order a custom bouquet:%0AFlowers: ${form.flowers.join(' + ')}%0AColor: ${form.color}%0AWrap: ${form.wrap}%0ASize: ${form.size}%0ARibbon: ${form.ribbon?'Yes':'No'}%0ACard: ${form.card?`Yes - "${form.msg}"`:'No'}%0APrice: ₹${price+(form.ribbon?100:0)+(form.card?50:0)}`}
-                target="_blank" rel="noreferrer">
-                <button style={{
-                  width:'100%',background:'#25D366',border:'none',color:'#fff',
-                  padding:'14px',borderRadius:'14px',cursor:'pointer',fontSize:'15px',fontWeight:700,marginBottom:'10px'
-                }}>📱 Order on WhatsApp</button>
-              </a>
+  target="_blank" rel="noreferrer">
+  <button style={{
+    width:'100%',background:'#25D366',border:'none',color:'#fff',
+    padding:'14px',borderRadius:'14px',cursor:'pointer',fontSize:'15px',fontWeight:700,marginBottom:'10px'
+  }}>📱 Order on WhatsApp</button>
+</a>
+<a href={`mailto:artsyspalette.petals@gmail.com?subject=Custom Bouquet Order&body=Hi Artsy!%0A%0AI'd like to order a custom bouquet:%0A%0A🌸 Flowers: ${form.flowers.join(' + ')}%0A🎨 Color: ${form.color}%0A🎁 Wrap: ${form.wrap}%0A📏 Size: ${form.size}%0A🎀 Ribbon: ${form.ribbon?'Yes':'No'}%0A💌 Card: ${form.card?`Yes - "${form.msg}"`:'No'}%0A💰 Price: ₹${price+(form.ribbon?100:0)+(form.card?50:0)}`}
+  target="_blank" rel="noreferrer">
+  <button style={{
+    width:'100%',background:'var(--bp)',border:'none',color:'#fff',
+    padding:'14px',borderRadius:'14px',cursor:'pointer',fontSize:'15px',fontWeight:700,marginBottom:'10px'
+  }}>✉️ Order via Email</button>
+</a>
+<button onClick={()=>setPreview(false)} style={{
+  background:'transparent',border:'none',color:'var(--tx3)',cursor:'pointer',fontSize:'13px'
+}}>Close</button>
               <button onClick={()=>setPreview(false)} style={{
                 background:'transparent',border:'none',color:'var(--tx3)',cursor:'pointer',fontSize:'13px'
               }}>Close</button>
